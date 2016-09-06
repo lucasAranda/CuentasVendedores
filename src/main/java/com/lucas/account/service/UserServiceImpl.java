@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findOneBySheet(String sheet) {
+        return userRepository.findBySheet(sheet);
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }

@@ -49,7 +49,7 @@ public class VendedorService {
 
         System.out.println(usuarioVendedor);
         User user = userService.findByUserName(usuarioVendedor);
-
+        if (user == null) System.out.println("Usuario Nulo");
         double importeParcial, importeTotal = 0;
 
         List<Comprobante> comprobantes = new ArrayList<>();
@@ -169,5 +169,10 @@ public class VendedorService {
             }
         }
         return vendedor;
+    }
+
+    public Vendedor obtenerComprobantesPorSheet(String sheet){
+
+        return TERMINAR;
     }
 }

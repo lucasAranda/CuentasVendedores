@@ -13,6 +13,7 @@ public interface UserService {
     void save(User user);
 
     User findByUserName(String username);
+    User findOneBySheet(String sheet);
 
     List<User> findAll();
 

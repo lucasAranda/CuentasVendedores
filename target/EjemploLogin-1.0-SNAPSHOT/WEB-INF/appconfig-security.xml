@@ -11,20 +11,21 @@
         <intercept-url pattern="/" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/welcome" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/home" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/User/**" access="hasRole('ROLE_ADMIN')"/>
         <form-login login-page="/login" authentication-success-handler-ref="customSuccessHandler" authentication-failure-url="/login?error" username-parameter="username" password-parameter="password"/><!--LE QUITE default-target-url="/home" PARA REDIRECCIONAR CON EL BEAN -->
         <logout logout-success-url="/login?logout"/>
     </http>
 
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="userDetailsServiceImpl">
-            <password-encoder ref="encoder"></password-encoder>
+            <password-encoder ref="encoder"/>
         </authentication-provider>
     </authentication-manager>
 
     <beans:bean id="customSuccessHandler" class="com.lucas.account.configuration.CustomSuccessHandler" />
 
-    <beans:bean id="userDetailsServiceImpl" class="com.lucas.account.service.UserDetailsServiceImpl"></beans:bean>
+    <beans:bean id="userDetailsServiceImpl" class="com.lucas.account.service.UserDetailsServiceImpl"/>
 
     <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <beans:constructor-arg name="strength" value="11"/>

@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page session="false" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
 	<title>JQuery Datatable + Spring MVC Example</title>
@@ -16,6 +19,7 @@
 		<h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
 
 	</c:if>
+
 	<h1>Resumen de Cuenta</h1>
 	<h2>${vendedor.nombre}</h2>
 	<h3>Total a cancelar: ${vendedor.montoTotal}</h3>
