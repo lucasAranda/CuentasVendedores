@@ -4,6 +4,7 @@ import com.lucas.account.model.Comprobante;
 import com.lucas.account.model.User;
 import com.lucas.account.model.Vendedor;
 import com.lucas.account.util.DateFormat;
+import com.lucas.account.util.Rounder;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -150,19 +151,19 @@ public class VendedorService {
                 workbook.close();
                 switch (j){
                     case 0:
-                        vendedor.setTotalEste(importeParcial);
+                        vendedor.setTotalEste(Rounder.round(importeParcial, 2));
                         break;
                     case 1:
-                        vendedor.setTotalUco(importeParcial);
+                        vendedor.setTotalUco(Rounder.round(importeParcial, 2));
                         break;
                     case 2:
-                        vendedor.setTotalHormicon(importeParcial);
+                        vendedor.setTotalHormicon(Rounder.round(importeParcial, 2));
                         break;
                     case 3:
-                        vendedor.setTotalInsucon(importeParcial);
+                        vendedor.setTotalInsucon(Rounder.round(importeParcial, 2));
                         break;
                 }
-                vendedor.setMontoTotal(importeTotal);
+                vendedor.setMontoTotal(Rounder.round(importeTotal, 2));
                 vendedor.setComprobantes(comprobantes);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -172,7 +173,111 @@ public class VendedorService {
     }
 
     public Vendedor obtenerComprobantesPorSheet(String sheet){
+        double importeParcial, importeTotal = 0;
 
-        return TERMINAR;
+        List<Comprobante> comprobantes = new ArrayList<>();
+
+        Vendedor vendedor = new Vendedor();
+        vendedor.setNombre(sheet);
+
+        for (int j = 0; j < archivos.length; j++) {
+            importeParcial = 0;
+            try {
+                //List<UserInfo> lstUser = new ArrayList<>();
+                int i = 1;
+                // Creates a workbook object from the uploaded excelfile
+                //XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
+                XSSFWorkbook workbook = new XSSFWorkbook(archivos[j]);
+                // Creates a worksheet object representing the first sheet
+                //XSSFSheet worksheet = workbook.getSheetAt(0);
+                XSSFSheet worksheet = workbook.getSheet(sheet);
+                Iterator<Row> rowIterator = worksheet.iterator();
+                // Reads the data in excel file until last row is encountered
+                Row row;
+                row = rowIterator.next();
+                //row = rowIterator.next();
+                while (rowIterator.hasNext()) {
+
+                    row = rowIterator.next();
+                    if (isRowEmpty(row)) {
+                        continue;
+                    }
+                    Comprobante comprobante = new Comprobante();
+                    //For each row, iterate through all the columns
+                    Iterator<Cell> cellIterator = row.cellIterator();
+
+                    while (cellIterator.hasNext()) {
+                        Cell cell = cellIterator.next();
+
+                        switch (cell.getColumnIndex()) {
+                            case 2:
+                                break;
+                            case 3:
+                                comprobante.setCliente(cell.getStringCellValue());
+                                break;
+                            case 4:
+                                comprobante.setFechaComprobante(DateFormat.formatDate(cell.getDateCellValue()));
+                                break;
+                            case 5:
+                                comprobante.setTipoComprobante(cell.getStringCellValue());
+                                break;
+                            case 6:
+                                comprobante.setNumeroComprobante(cell.getStringCellValue());
+                                break;
+                            case 7:
+                                break;
+                            case 8:
+                                if (cell.getCellType() == 1) {
+                                    System.out.println("OLE");
+                                    break;
+                                } else {
+
+                                    comprobante.setImporte(cell.getNumericCellValue());
+                                    importeParcial += cell.getNumericCellValue();
+                                    importeTotal += cell.getNumericCellValue();
+                                }
+                                break;
+                            default:
+                                break;
+                        }//end switch
+                        switch (j){
+                            case 0:
+                                comprobante.setEmpresa("DESAR. DEL ESTE");
+                                break;
+                            case 1:
+                                comprobante.setEmpresa("DESAR. VALLE DE UCO");
+                                break;
+                            case 2:
+                                comprobante.setEmpresa("HORMICON");
+                                break;
+                            case 3:
+                                comprobante.setEmpresa("INSUCON");
+                                break;
+                        }
+                    }//end while
+                    comprobantes.add(comprobante);
+                }//end
+                workbook.close();
+                switch (j){
+                    case 0:
+                        vendedor.setTotalEste(Rounder.round(importeParcial, 2));
+                        break;
+                    case 1:
+                        vendedor.setTotalUco(Rounder.round(importeParcial, 2));
+                        break;
+                    case 2:
+                        vendedor.setTotalHormicon(Rounder.round(importeParcial, 2));
+                        break;
+                    case 3:
+                        vendedor.setTotalInsucon(Rounder.round(importeParcial, 2));
+                        break;
+                }
+                vendedor.setMontoTotal(Rounder.round(importeTotal, 2));
+                vendedor.setComprobantes(comprobantes);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return vendedor;
     }
 }

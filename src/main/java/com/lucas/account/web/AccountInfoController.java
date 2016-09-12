@@ -74,7 +74,14 @@ public class AccountInfoController {
 		model.addAttribute("userForm", dtoUser);
 		model.addAttribute("lstVendedores", vendedores);
 
-		Vendedor vendedor = vendedorService.obtenerComprobantes(userService.findOneBySheet(dtoUser.getSheet()).getUsername());
+		com.lucas.account.model.User user = userService.findOneBySheet(dtoUser.getSheet());
+		Vendedor vendedor;
+		if (user == null){
+			vendedor = vendedorService.obtenerComprobantesPorSheet(dtoUser.getSheet());
+		} else{
+			vendedor = vendedorService.obtenerComprobantes(user.getUsername());
+		}
+
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("vendedor", vendedor);
 		model.addAttribute("lstComprobante", mapper.writeValueAsString(vendedor.getComprobantes()));

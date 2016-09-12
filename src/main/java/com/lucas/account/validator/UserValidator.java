@@ -36,7 +36,7 @@ public class UserValidator implements Validator{
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "NotEmpty");
 
         if("NONE".equals(user.getRole())){
-            errors.rejectValue("role", "Required.userform.role");
+            errors.rejectValue("role", "Required.userForm.role");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sheet", "NotEmpty");

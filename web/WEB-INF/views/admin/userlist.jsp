@@ -5,30 +5,34 @@
 
 <jsp:include page="../admin/header.jsp"/>
 <jsp:include page="../admin/menu.jsp"/>
-<div id="wrapper" style="min-height: 944px;">
-    <div id="page-content-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Usuarios</h1>
-                <sub><a class="btn btn-info" role="button" href="${pageContext.request.contextPath}/User/registration">Agregar
-                    Usuario</a></sub>
+
+<div class="main">
+    <!--<div id="wrapper" style="min-height: 944px;">-->
+        <div id="page-content-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Usuarios</h1>
+                    <sub><a class="btn btn-info" role="button"
+                            href="${pageContext.request.contextPath}/User/registration">Agregar
+                        Usuario</a></sub>
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.col-lg-12 -->
+            <br>
+            <br>
+            <table id="table_users" class="display">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Vendedor</th>
+                    <th>Hoja de Excel</th>
+                    <th>Permiso</th>
+                    <th>Editar / Borrar</th>
+                </tr>
+                </thead>
+            </table>
         </div>
-        <br>
-        <br>
-        <table id="table_users" class="display">
-            <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Vendedor</th>
-                <th>Hoja de Excel</th>
-                <th>Permiso</th>
-                <th>Editar / Borrar</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
+    <!--</div>-->
 </div>
 <script type="text/javascript">
     $(document).ready(function () {

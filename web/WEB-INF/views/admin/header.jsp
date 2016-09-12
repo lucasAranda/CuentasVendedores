@@ -22,7 +22,7 @@
     <meta name="author" content="">
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<c:url value='/resources/css/simple-sidebar.css' />" rel="stylesheet">
+    <link href="<c:url value='/resources/css/sidebar.css' />" rel="stylesheet">
     <link rel="stylesheet" type="text/css"
           href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"/>
     <spring:url value="/resources/js/jquery-1.12.1.min.js"
@@ -42,4 +42,5 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/resources/js/sidebar.js"></script>
 </head>

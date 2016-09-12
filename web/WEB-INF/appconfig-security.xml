@@ -13,6 +13,7 @@
         <intercept-url pattern="/home" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/User/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/AccountInfo/**" access="hasRole('ROLE_ADMIN')"/>
         <form-login login-page="/login" authentication-success-handler-ref="customSuccessHandler" authentication-failure-url="/login?error" username-parameter="username" password-parameter="password"/><!--LE QUITE default-target-url="/home" PARA REDIRECCIONAR CON EL BEAN -->
         <logout logout-success-url="/login?logout"/>
     </http>
