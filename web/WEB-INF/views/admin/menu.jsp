@@ -50,24 +50,3 @@
         </div>
     </div>
 </nav>
-<!--<div id="wrapper">
-
-    <!-- Sidebar
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <a href="#">
-                    ${pageContext.request.userPrincipal.name}
-                </a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/User/">Usuarios</a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/AccountInfo/">Estados de Cuenta</a>
-            </li>
-
-        </ul>
-    </div>
-    <!-- /#sidebar-wrapper
-</div> -->

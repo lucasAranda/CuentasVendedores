@@ -20,7 +20,7 @@
             </div>
             <br>
             <br>
-            <table id="table_users" class="display">
+            <table id="table_users" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th>Usuario</th>
