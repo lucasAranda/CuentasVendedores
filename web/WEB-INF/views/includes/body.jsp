@@ -13,17 +13,17 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
 
-                <h2>Welcome ${pageContext.request.userPrincipal.name} | <a
-                        onclick="document.forms['logoutForm'].submit()">Logout</a>
+                <h2>Bienvenido ${pageContext.request.userPrincipal.name} | <a
+                        onclick="document.forms['logoutForm'].submit()">Salir</a>
                 </h2>
 
             </c:if>
         </div>
         <h1>Resumen de Cuenta</h1>
         <h2>${vendedor.nombre}</h2>
-        <h3>Total a cancelar: ${vendedor.montoTotal}</h3>
-        <h4>Total Hormicon: ${vendedor.totalHormicon} Total Insucon: ${vendedor.totalInsucon} Total
-            Este: ${vendedor.totalEste} Total Uco: ${vendedor.totalUco}</h4>
+        <h3>Total a cancelar: $ ${vendedor.montoTotal}</h3>
+        <h4>Total Hormicon: $ ${vendedor.totalHormicon} Total Insucon: $ ${vendedor.totalInsucon} Total
+            Este: $ ${vendedor.totalEste} Total Uco: $ ${vendedor.totalUco}</h4>
         <!--<img class="dataTableExample" src="resources/images/JQueryDatatableandSpringMVC.png">-->
 
         <table id="example" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">

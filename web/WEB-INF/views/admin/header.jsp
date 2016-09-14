@@ -36,10 +36,7 @@
         <script src="${dataresponsive}"></script>
     <spring:url value="/resources/js/responsive.bootstrap.js" var="respboots" />
         <script src="${respboots}"></script>
-    <spring:url value="/resources/css/jquery.dataTables.css" var="jquerydataTables" />
-    <link href="${jquerydataTables}" rel="stylesheet" />
-    <spring:url value="/resources/css/jquery.dataTables.min.css" var="jquerydataTablesMin" />
-    <link href="${jquerydataTablesMin}" rel="stylesheet" />
+
     <title>Admin page</title>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

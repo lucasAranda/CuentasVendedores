@@ -19,7 +19,7 @@
                             </form>
 
                             <h2>Bienvenido a la Pagina de Adninistracion ${pageContext.request.userPrincipal.name} | <a style="cursor: pointer;"
-                                    onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+                                    onclick="document.forms['logoutForm'].submit()">Salir</a></h2>
 
                         </c:if>
 

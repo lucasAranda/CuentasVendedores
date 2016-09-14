@@ -38,8 +38,9 @@ public class UserValidator implements Validator{
         if("NONE".equals(user.getRole())){
             errors.rejectValue("role", "Required.userForm.role");
         }
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sheet", "NotEmpty");
+        if (!("ROLE_ADMIN".equals(user.getRole()))){
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sheet", "NotEmpty");
+        }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
             if (user.getPassword().length()<8||user.getPassword().length()>32){

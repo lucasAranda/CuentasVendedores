@@ -29,9 +29,9 @@
             <br>
             <br>
             <h2>${vendedor.nombre}</h2>
-            <h3>Total a cancelar: ${vendedor.montoTotal}</h3>
-            <h4>Total Hormicon: ${vendedor.totalHormicon} Total Insucon: ${vendedor.totalInsucon} Total
-                Este: ${vendedor.totalEste} Total Uco: ${vendedor.totalUco}</h4>
+            <h3>Total a cancelar: $ ${vendedor.montoTotal}</h3>
+            <h4>Total Hormicon: $ ${vendedor.totalHormicon} Total Insucon: $ ${vendedor.totalInsucon} Total
+                Este: $ ${vendedor.totalEste} Total Uco: $ ${vendedor.totalUco}</h4>
             <!--<img class="dataTableExample" src="resources/images/JQueryDatatableandSpringMVC.png">-->
             <table id="table_users" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                 <thead>
