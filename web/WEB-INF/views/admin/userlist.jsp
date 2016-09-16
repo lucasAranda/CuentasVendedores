@@ -24,7 +24,7 @@
                 <thead>
                 <tr>
                     <th>Usuario</th>
-                    <th>Vendedor</th>
+                    <th>Nombre</th>
                     <th>Hoja de Excel</th>
                     <th>Permiso</th>
                     <th>Editar / Borrar</th>

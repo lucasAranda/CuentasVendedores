@@ -6,6 +6,7 @@
   Time: 12:50 PM
   To change this template use File | Settings | File Templates.
 --%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <body>
 <nav class="navbar navbar-inverse sidebar" role="navigation">
     <div class="container-fluid">
@@ -17,7 +18,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/admin">${pageContext.request.userPrincipal.name}</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/admin">${pageContext.request.userPrincipal.name}</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
@@ -29,7 +30,7 @@
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
 
-                    <li ><a style="cursor: pointer;" onclick="document.forms['logoutForm'].submit()">Salir<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+                    <li ><a onclick="document.forms['logoutForm'].submit()" style="cursor: pointer;" >Salir<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
 
                 </c:if>
 

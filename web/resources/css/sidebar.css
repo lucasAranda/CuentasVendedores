@@ -1,7 +1,11 @@
 body, html {
     height: 100%;
+    background-color: #eee;
 }
 
+thead{
+    background-color: #63b8ff;
+}
 /* remove outer padding */
 .main .row {
     padding: 0px;

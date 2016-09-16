@@ -71,4 +71,8 @@ public class DTOUser {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public boolean isNew() {
+        return (this.id == null);
+    }
 }

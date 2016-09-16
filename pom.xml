@@ -5,10 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lucas.spring</groupId>
-    <artifactId>EjemploLogin</artifactId>
-    <name>EjemploLogin</name>
+    <artifactId>Cuentas</artifactId>
+    <name>Cuentas</name>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
 
     <url>http://maven.apache.org</url>
     <properties>

@@ -37,7 +37,10 @@
 
 <div class="container">
 
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
+    <spring:url value="/User/registration" var="profileActionUrl" />
+
+    <form:form method="POST" modelAttribute="userForm" class="form-signin" action="${profileActionUrl}">
+
         <c:choose>
             <c:when test="${not empty id}">
                 <h2 class="form-signin-heading">Editar Usuario</h2>
