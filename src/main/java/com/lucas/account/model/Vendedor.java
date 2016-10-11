@@ -14,6 +14,7 @@ public class Vendedor {
     private Double totalUco;
     private Double montoTotal;
     private List<Comprobante> comprobantes;
+    private List<Adimix> listaSaldos;
 
     public Vendedor() {
     }
@@ -72,5 +73,13 @@ public class Vendedor {
 
     public void setTotalUco(Double totalUco) {
         this.totalUco = totalUco;
+    }
+
+    public List<Adimix> getListaSaldos() {
+        return listaSaldos;
+    }
+
+    public void setListaSaldos(List<Adimix> listaSaldos) {
+        this.listaSaldos = listaSaldos;
     }
 }

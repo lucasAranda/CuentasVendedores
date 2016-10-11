@@ -60,9 +60,12 @@ public class AccountInfoController {
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		Vendedor vendedor = vendedorService.obtenerComprobantes(user.getUsername()); //get logged in username
+		vendedor.setListaSaldos(vendedorService.obtenerAdimix(user.getUsername()));
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("vendedor", vendedor);
 		model.addAttribute("lstComprobante", mapper.writeValueAsString(vendedor.getComprobantes()));
+		model.addAttribute("lstAdimixes", mapper.writeValueAsString(vendedor.getListaSaldos()));
+
 		//model.addAttribute("employeeList", mapper.writeValueAsString(dataService.getEmployeeList()));
 		return "user/home";
 	}
@@ -78,14 +81,16 @@ public class AccountInfoController {
 		Vendedor vendedor;
 		if (user == null){
 			vendedor = vendedorService.obtenerComprobantesPorSheet(dtoUser.getSheet());
+			vendedor.setListaSaldos(vendedorService.obtenerAdimixSheet(dtoUser.getSheet()));
 		} else{
 			vendedor = vendedorService.obtenerComprobantes(user.getUsername());
+			vendedor.setListaSaldos(vendedorService.obtenerAdimix(user.getUsername()));
 		}
 
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("vendedor", vendedor);
 		model.addAttribute("lstComprobante", mapper.writeValueAsString(vendedor.getComprobantes()));
-
+		model.addAttribute("lstAdimixes", mapper.writeValueAsString(vendedor.getListaSaldos()));
 		return "admin/info";
 	}
 	

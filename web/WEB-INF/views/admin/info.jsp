@@ -45,6 +45,20 @@
                 </tr>
                 </thead>
             </table>
+            <br>
+            <br>
+            <table id="table_sellers" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Articulo</th>
+                    <th>Metros</th>
+                    <th>Precio ($)</th>
+                    <th>Fecha</th>
+                    <th>Importe ($)</th>
+                </tr>
+                </thead>
+            </table>
         </div>
     <!--</div>-->
 </div>
@@ -69,5 +83,25 @@
         });
     });
 </script>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log(${lstAdimixes});
+        var datav = eval('${lstAdimixes}');
+        console.log(datav);
+        var tabler = $('#table_sellers').DataTable({
+            "aaData": datav,
+            "aoColumns": [
+                {"mData": "cliente"},
+                {"mData": "articulo"},
+                {"mData": "metros"},
+                {"mData": "precio"},
+                {"mData": "fecha"},
+                {"mData": "importe"}
+            ],
+            "paging": true,
+            "pageLength": 20,
+            "ordering": true
+        });
+    });
+</script>
 <jsp:include page="../admin/footer.jsp"/>

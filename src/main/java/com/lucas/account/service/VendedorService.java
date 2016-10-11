@@ -1,9 +1,11 @@
 package com.lucas.account.service;
 
+import com.lucas.account.model.Adimix;
 import com.lucas.account.model.Comprobante;
 import com.lucas.account.model.User;
 import com.lucas.account.model.Vendedor;
 import com.lucas.account.util.DateFormat;
+import com.lucas.account.util.Excel;
 import com.lucas.account.util.Rounder;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.lucas.account.util.Excel.isRowEmpty;
-
 /**
  * Created by maquina0 on 19/08/2016.
  */
@@ -28,10 +28,22 @@ public class VendedorService {
     @Autowired
     private UserService userService;
 
-    private static String[] archivos = {"H:\\ARCHIVOS EXCEL\\DESARROLLADORA DEL ESTE\\COBRANZAS VENDEDORES VS ESTE.xlsx",
+    /*private static String[] archivos = {"H:\\ARCHIVOS EXCEL\\DESARROLLADORA DEL ESTE\\COBRANZAS VENDEDORES VS ESTE.xlsx",
             "H:\\ARCHIVOS EXCEL\\DESARROLLADORA DEL VALLE DE UCO\\COBRANZAS VENDEDORES VS UCO.xlsx",
             "H:\\ARCHIVOS EXCEL\\HORMICON\\COBRANZAS VENDEDORES VS HORMICON.xlsx",
             "H:\\ARCHIVOS EXCEL\\INSUCON\\COBRANZAS INSUCON.xlsx"};
+    private static String archAdm = "H:\\ARCHIVOS EXCEL\\INFORME DIARIO ADIMIX.xlsx";*/
+
+    /*private static String[] archivos = {"E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\DESARROLLADORA DEL ESTE\\COBRANZAS VENDEDORES VS ESTE.xlsx",
+            "E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\DESARROLLADORA DEL VALLE DE UCO\\COBRANZAS VENDEDORES VS UCO.xlsx",
+            "E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\HORMICON\\COBRANZAS VENDEDORES VS HORMICON.xlsx",
+            "E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\INSUCON\\COBRANZAS INSUCON.xlsx"};*/
+
+    private static String[] archivos = {"E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\SistemaLucas\\DESARROLLADORA DEL ESTE\\COBRANZAS VENDEDORES VS ESTE.xlsx",
+            "E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\SistemaLucas\\DESARROLLADORA DEL VALLE DE UCO\\COBRANZAS VENDEDORES VS UCO.xlsx",
+            "E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\SistemaLucas\\HORMICON\\COBRANZAS VENDEDORES VS HORMICON.xlsx",
+            "E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\SistemaLucas\\INSUCON\\COBRANZAS INSUCON.xlsx"};
+    private static String archAdm = "E:\\DISK\\datos\\Jcalabretto\\COBRANZAS\\SistemaLucas\\INFORME DIARIO ADIMIX.xlsx";
 
     public List<String> obtenerVendedores(){
         List<String> vendedores = new ArrayList<>();
@@ -40,6 +52,7 @@ public class VendedorService {
             for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
                 vendedores.add(workbook.getSheetName(i));
             }
+            workbook.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,7 +90,7 @@ public class VendedorService {
                 while (rowIterator.hasNext()) {
 
                     row = rowIterator.next();
-                    if (isRowEmpty(row)) {
+                    if (Excel.isRowEmpty(row)) {
                         continue;
                     }
                     Comprobante comprobante = new Comprobante();
@@ -173,6 +186,7 @@ public class VendedorService {
     }
 
     public Vendedor obtenerComprobantesPorSheet(String sheet){
+        System.out.println("VENDEDOR: " + sheet);
         double importeParcial, importeTotal = 0;
 
         List<Comprobante> comprobantes = new ArrayList<>();
@@ -199,7 +213,7 @@ public class VendedorService {
                 while (rowIterator.hasNext()) {
 
                     row = rowIterator.next();
-                    if (isRowEmpty(row)) {
+                    if (Excel.isRowEmpty(row)) {
                         continue;
                     }
                     Comprobante comprobante = new Comprobante();
@@ -258,6 +272,7 @@ public class VendedorService {
                     comprobantes.add(comprobante);
                 }//end
                 workbook.close();
+                System.out.println("CERRAR ARCHIVO");
                 switch (j){
                     case 0:
                         vendedor.setTotalEste(Rounder.round(importeParcial, 2));
@@ -279,5 +294,237 @@ public class VendedorService {
             }
         }
         return vendedor;
+    }
+
+    public List<Adimix> obtenerAdimixSheet(String vendedor) {
+
+        XSSFWorkbook workbook = null;
+        List<Adimix> adimixList = new ArrayList<>();
+        try {
+
+            //Create Workbook instance holding reference to .xlsx file
+            workbook = new XSSFWorkbook(archAdm);
+
+            //Get first/desired sheet from the workbook
+            XSSFSheet sheet = workbook.getSheet("DETALLE ADIMIX");
+            //Iterate through each rows one by one
+            Iterator<Row> rowIterator = sheet.iterator();
+            //apartir de la tercera fila hay datos validos
+            Row row;
+            row = rowIterator.next();
+            //row = rowIterator.next();
+            fin:
+            while (rowIterator.hasNext()) {
+
+                row = rowIterator.next();
+                System.out.println("Fila: " + row.getRowNum());
+                if (Excel.isRowEmptyAdm(row)) {
+                    continue;
+                }
+
+                Adimix adimix = new Adimix();
+                /*System.out.println("Comprobante: " + (i++));
+                System.out.println("Cantidad: " + row.getLastCellNum());*/
+                //For each row, iterate through all the columns
+                outer:
+                for (int j = 0; j < row.getLastCellNum(); j++) {
+                    Cell cell = row.getCell(j, Row.CREATE_NULL_AS_BLANK);
+                    if (cell == null) {
+                        //System.out.println("Vacio");
+                    } else {
+
+                        switch (cell.getColumnIndex()) {
+                            case 0:
+                                if (cell.getStringCellValue().equals("FIN")) {
+                                    System.out.println("ACA");
+                                    break fin;
+                                } else if (cell.getStringCellValue().equals(vendedor)) {
+                                    System.out.println("VENDEDOR: " + cell.getStringCellValue());
+                                    break;
+                                } else {
+                                    break outer;
+                                }
+                            case 2:
+                                System.out.println("CLIENTE: " + cell.getStringCellValue());
+                                adimix.setCliente(cell.getStringCellValue());
+                                break;
+                            case 3:
+                                System.out.println("ARTICULO: " + cell.getStringCellValue());
+                                adimix.setArticulo(cell.getStringCellValue());
+                                break;
+                            case 4:
+                                if (cell.getCellType() == 0) {
+                                    System.out.println("METROS: " + cell.getNumericCellValue());
+                                    adimix.setMetros(cell.getNumericCellValue());
+                                    break;
+                                } else {
+                                    System.out.println("METROS: " + cell.getStringCellValue());
+                                    break;
+                                }
+                            case 5:
+                                if (cell.getCellType() == 0) {
+                                    System.out.println("PRECIO: " + cell.getNumericCellValue());
+                                    adimix.setPrecio(cell.getNumericCellValue());
+                                } else {
+                                    System.out.println("PRECIO: " + cell.getStringCellValue());
+                                }
+                                break;
+                            case 7:
+                                if (cell.getCellType() == 0) {
+                                    System.out.println("FECHA_FAC: " + cell.getDateCellValue());
+                                    adimix.setFecha(DateFormat.formatDate(cell.getDateCellValue()));
+                                } else {
+                                    System.out.println("FECHA_FAC: " + cell.getStringCellValue());
+                                    adimix.setFecha(cell.getStringCellValue());
+                                }
+                                break;
+                            case 9:
+                                if (cell.getCellType() == 0 || cell.getCellType() == 2) {
+                                    System.out.println("IMPORTE: " + cell.getNumericCellValue());
+                                    adimix.setImporte(cell.getNumericCellValue());
+                                } else {
+                                    System.out.println("IMPORTE: " + cell.getStringCellValue());
+                                }
+                                break;
+                            default:
+                                break;
+                        }//end switch
+                    }//end if vacio
+                }//end for
+                if (adimix.getCliente() != null && !(adimix.getCliente().equals(""))){
+                    adimixList.add(adimix);
+                }
+                System.out.println("---------");
+            }//end while
+            workbook.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (workbook != null){
+                try {
+                    workbook.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return adimixList;
+
+    }
+
+    public List<Adimix> obtenerAdimix(String username) {
+
+        User user = userService.findByUserName(username);
+        if (user == null) System.out.println("Usuario Nulo");
+
+        XSSFWorkbook workbook = null;
+        List<Adimix> adimixList = new ArrayList<>();
+        try {
+
+            //Create Workbook instance holding reference to .xlsx file
+            workbook = new XSSFWorkbook(archAdm);
+
+            //Get first/desired sheet from the workbook
+            XSSFSheet sheet = workbook.getSheet("DETALLE ADIMIX");
+            //Iterate through each rows one by one
+            Iterator<Row> rowIterator = sheet.iterator();
+            //apartir de la tercera fila hay datos validos
+            Row row;
+            row = rowIterator.next();
+            //row = rowIterator.next();
+            fin:
+            while (rowIterator.hasNext()) {
+
+                row = rowIterator.next();
+                System.out.println("Fila: " + row.getRowNum());
+                if (Excel.isRowEmptyAdm(row)) {
+                    continue;
+                }
+
+                Adimix adimix = new Adimix();
+                /*System.out.println("Comprobante: " + (i++));
+                System.out.println("Cantidad: " + row.getLastCellNum());*/
+                //For each row, iterate through all the columns
+                outer:
+                for (int j = 0; j < row.getLastCellNum(); j++) {
+                    Cell cell = row.getCell(j, Row.CREATE_NULL_AS_BLANK);
+                    if (cell == null) {
+                        //System.out.println("Vacio");
+                    } else {
+
+                        switch (cell.getColumnIndex()) {
+                            case 0:
+                                if (cell.getStringCellValue().equals("FIN")) {
+                                    System.out.println("ACA");
+                                    break fin;
+                                } else if (cell.getStringCellValue().equals(user.getSheet())) {
+                                    System.out.println("VENDEDOR: " + cell.getStringCellValue());
+                                    break;
+                                } else {
+                                    break outer;
+                                }
+                            case 2:
+                                System.out.println("CLIENTE: " + cell.getStringCellValue());
+                                adimix.setCliente(cell.getStringCellValue());
+                                break;
+                            case 3:
+                                System.out.println("ARTICULO: " + cell.getStringCellValue());
+                                adimix.setArticulo(cell.getStringCellValue());
+                                break;
+                            case 4:
+                                if (cell.getCellType() == 0) {
+                                    System.out.println("METROS: " + cell.getNumericCellValue());
+                                    adimix.setMetros(cell.getNumericCellValue());
+                                    break;
+                                } else {
+                                    System.out.println("METROS: " + cell.getStringCellValue());
+                                    break;
+                                }
+                            case 5:
+                                if (cell.getCellType() == 0) {
+                                    System.out.println("PRECIO: " + cell.getNumericCellValue());
+                                    adimix.setPrecio(cell.getNumericCellValue());
+                                } else {
+                                    System.out.println("PRECIO: " + cell.getStringCellValue());
+                                }
+                                break;
+                            case 7:
+                                if (cell.getCellType() == 0) {
+                                    System.out.println("FECHA_FAC: " + cell.getDateCellValue());
+                                    adimix.setFecha(DateFormat.formatDate(cell.getDateCellValue()));
+                                } else {
+                                    System.out.println("FECHA_FAC: " + cell.getStringCellValue());
+                                    adimix.setFecha(cell.getStringCellValue());
+                                }
+                                break;
+                            case 9:
+                                if (cell.getCellType() == 0 || cell.getCellType() == 2) {
+                                    System.out.println("IMPORTE: " + cell.getNumericCellValue());
+                                    adimix.setImporte(cell.getNumericCellValue());
+                                } else {
+                                    System.out.println("IMPORTE: " + cell.getStringCellValue());
+                                }
+                                break;
+                            default:
+                                break;
+                        }//end switch
+                    }//end if vacio
+                }//end for
+                if (adimix.getCliente() != null && !(adimix.getCliente().equals(""))){
+                    adimixList.add(adimix);
+                }
+                System.out.println("---------");
+            }//end while
+            workbook.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (workbook != null){
+                try {
+                    workbook.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return adimixList;
     }
 }

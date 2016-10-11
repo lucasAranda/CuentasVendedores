@@ -13,4 +13,15 @@ public class Excel {
             return false;
         }
     }
+
+    public static boolean isRowEmptyAdm(Row row) {
+        if (row.getCell(0) == null || row.getCell(0).getStringCellValue().equals("")) {
+            return true;
+        } else if (row.getCell(2) == null || row.getCell(2).getStringCellValue().equals("")) {
+            return true;
+        } else if (row.getCell(7) == null || row.getCell(7).getCellType() == 3) {
+            return true;
+        }
+        return false;
+    }
 }
